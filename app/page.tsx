@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useState } from "react";
 import type { Ad } from "@/lib/mockAds";
 import { AdsTable } from "@/components/AdsTable";
@@ -469,8 +470,8 @@ function TopBar({
   adCount: number;
 }) {
   return (
-    <header className="flex flex-wrap items-center justify-between gap-3">
-      <div className="flex items-center gap-2">
+    <header className="sticky top-4 z-30 flex flex-wrap items-center justify-between gap-3 rounded-[18px] border border-white/[0.06] bg-[rgba(10,11,16,0.6)] px-4 py-3 shadow-card backdrop-blur-xl supports-[backdrop-filter]:bg-[rgba(10,11,16,0.45)] animate-fade-up">
+      <Link href="/" className="flex items-center gap-2 transition hover:opacity-80">
         <div className="relative h-8 w-8">
           <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-violet-500 via-pink-500 to-orange-400 blur-md opacity-70" />
           <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 via-pink-500 to-orange-400 text-sm font-bold text-white">
@@ -481,7 +482,7 @@ function TopBar({
           <div className="text-sm font-semibold tracking-tight text-white">Ad Brain</div>
           <div className="text-[10px] text-zinc-500">Ad Distribution Manager</div>
         </div>
-      </div>
+      </Link>
 
       <div className="order-3 flex w-full items-center gap-2 md:order-2 md:w-auto">
         <span
@@ -601,16 +602,24 @@ function Tabs({
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className={`relative inline-flex items-center gap-2 rounded-t-lg px-4 py-2.5 text-sm font-medium transition ${
+            className={`relative inline-flex items-center gap-2 rounded-t-lg px-4 py-2.5 text-sm font-medium transition-colors ${
               active ? "text-white" : "text-zinc-400 hover:text-white"
             }`}
           >
             {t.label}
             {t.id === "ai" && analyzed && (
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/50" />
+                <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              </span>
             )}
             {active && (
-              <span className="absolute bottom-[-1px] left-0 right-0 h-[2px] bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400" />
+              <span
+                className="pointer-events-none absolute bottom-[-1px] left-2 right-2 h-[2px] rounded-full bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 animate-scale-in"
+                style={{
+                  boxShadow: "0 0 12px rgba(236,72,153,0.55)",
+                }}
+              />
             )}
           </button>
         );

@@ -17,7 +17,7 @@ const kindStyles: Record<ActivityEvent["kind"], string> = {
 export function ActivityFeed({ events }: { events: ActivityEvent[] }) {
   if (!events.length) return null;
   return (
-    <aside className="surface p-5">
+    <aside className="surface p-5 animate-fade-up">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-white">Activity</h3>
         <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-400">

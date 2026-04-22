@@ -66,9 +66,12 @@ export function Copilot({ ads }: { ads: Ad[] }) {
     <>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-violet-500 via-pink-500 to-orange-400 px-4 py-3 text-sm font-semibold text-white shadow-glow hover:brightness-110"
+        className="btn-gradient fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-white"
       >
-        <ChatIcon />
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inset-0 animate-ping rounded-full bg-white/50" />
+          <span className="relative h-2 w-2 rounded-full bg-white" />
+        </span>
         {open ? "Close Copilot" : "Ask Copilot"}
       </button>
 
@@ -170,13 +173,6 @@ function Dot({ delay }: { delay: number }) {
   );
 }
 
-function ChatIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-    </svg>
-  );
-}
 
 function CloseIcon() {
   return (

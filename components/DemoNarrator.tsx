@@ -18,7 +18,10 @@ export function DemoNarrator({
   if (!active) return null;
   return (
     <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center px-4">
-      <div className="surface flex max-w-xl items-center gap-4 px-5 py-3 backdrop-blur-xl animate-fade-up ring-1 ring-inset ring-violet-400/30">
+      <div
+        className="surface flex max-w-xl items-center gap-4 px-5 py-3 animate-scale-in ring-1 ring-inset ring-violet-400/30"
+        style={{ backdropFilter: "blur(22px) saturate(160%)" }}
+      >
         <div className="relative">
           <span className="absolute inset-0 animate-ping rounded-full bg-violet-400/40" />
           <span className="relative block h-2 w-2 rounded-full bg-violet-400" />

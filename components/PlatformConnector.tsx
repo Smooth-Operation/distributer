@@ -34,8 +34,8 @@ export function PlatformConnector({
           return (
             <div
               key={p.platform}
-              className="surface relative overflow-hidden p-5 animate-fade-up"
-              style={{ animationDelay: `${i * 60}ms` }}
+              className="surface-hover relative overflow-hidden p-5 animate-fade-up"
+              style={{ animationDelay: `${i * 70}ms` }}
             >
               <div
                 className={`pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full bg-gradient-to-br ${p.tint} blur-3xl`}

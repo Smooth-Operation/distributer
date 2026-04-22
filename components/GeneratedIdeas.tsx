@@ -10,8 +10,8 @@ export function GeneratedIdeas({ ideas }: { ideas: AdIdea[] }) {
       {ideas.map((idea, i) => (
         <div
           key={i}
-          className="surface relative overflow-hidden p-6 animate-fade-up"
-          style={{ animationDelay: `${i * 60}ms` }}
+          className="surface-hover relative overflow-hidden p-6 animate-fade-up"
+          style={{ animationDelay: `${i * 80}ms` }}
         >
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-violet-300">

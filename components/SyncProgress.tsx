@@ -5,7 +5,7 @@ export type SyncStep = {
 
 export function SyncProgress({ steps }: { steps: SyncStep[] }) {
   return (
-    <div className="mx-auto max-w-xl rounded-2xl border border-white/5 bg-ink-800/70 p-5 shadow-card backdrop-blur">
+    <div className="surface mx-auto max-w-xl p-5 animate-scale-in">
       <div className="flex items-center gap-2 border-b border-white/5 pb-3">
         <div className="relative">
           <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/30" />

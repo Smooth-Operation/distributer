@@ -329,11 +329,12 @@ export function RewriteFlow({ ad }: { ad: Ad }) {
                   <article
                     key={i}
                     onClick={() => setActiveVariant(i)}
-                    className={`surface group relative flex cursor-pointer flex-col p-5 transition ${
+                    className={`surface-hover group relative flex cursor-pointer flex-col p-5 animate-fade-up ${
                       isActive
                         ? "ring-1 ring-inset ring-violet-400/40 bg-violet-500/[0.06]"
-                        : "hover:ring-1 hover:ring-inset hover:ring-white/10"
+                        : ""
                     }`}
+                    style={{ animationDelay: `${i * 90}ms` }}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <span

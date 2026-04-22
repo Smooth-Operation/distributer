@@ -51,12 +51,13 @@ function Stat({
   tone?: "good";
 }) {
   return (
-    <div className="flex items-baseline gap-2">
+    <div className="flex items-baseline gap-2 overflow-hidden">
       <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
         {label}
       </span>
       <span
-        className={`text-base font-semibold tabular-nums tracking-tight ${
+        key={value}
+        className={`animate-ticker text-base font-semibold tabular-nums tracking-tight ${
           tone === "good" ? "text-emerald-300" : "text-white"
         }`}
       >

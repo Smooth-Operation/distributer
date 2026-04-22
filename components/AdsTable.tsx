@@ -98,8 +98,8 @@ export function AdsTable({ ads }: { ads: Ad[] }) {
             {rows.map(({ ad, roas, status }, i) => (
               <tr
                 key={ad.id}
-                className="group cursor-pointer border-b border-white/5 transition hover:bg-white/[0.04] animate-fade-up"
-                style={{ animationDelay: `${i * 30}ms` }}
+                className="group cursor-pointer border-b border-white/5 row-hover animate-fade-up"
+                style={{ animationDelay: `${i * 40}ms` }}
                 onClick={() => (window.location.href = `/ad/${ad.id}`)}
               >
                 <td className="px-5 py-4">

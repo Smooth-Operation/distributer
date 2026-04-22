@@ -13,13 +13,14 @@ export function Toasts({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id:
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`pointer-events-auto flex min-w-[240px] max-w-sm items-start gap-3 rounded-xl border px-4 py-3 shadow-2xl backdrop-blur animate-fade-up ${
+          className={`pointer-events-auto flex min-w-[240px] max-w-sm items-start gap-3 rounded-[14px] border px-4 py-3 shadow-2xl backdrop-blur-xl animate-fade-up ${
             t.tone === "error"
               ? "border-rose-400/30 bg-rose-500/10 text-rose-100"
               : t.tone === "info"
               ? "border-white/10 bg-white/5 text-zinc-100"
               : "border-emerald-400/30 bg-emerald-500/10 text-emerald-100"
           }`}
+          style={{ backdropFilter: "blur(16px) saturate(140%)" }}
         >
           <div className="min-w-0 flex-1">
             <div className="text-sm font-semibold">{t.title}</div>

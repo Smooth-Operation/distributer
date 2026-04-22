@@ -35,7 +35,7 @@ export function KpiBar({ ads }: { ads: Ad[] }) {
       {items.map((k, i) => (
         <div
           key={k.label}
-          className="surface relative overflow-hidden p-4 animate-fade-up"
+          className="surface-hover relative overflow-hidden p-4 animate-fade-up"
           style={{ animationDelay: `${i * 60}ms` }}
         >
           <div className="flex items-center justify-between">

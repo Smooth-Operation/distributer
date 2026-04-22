@@ -1,6 +1,6 @@
 export function TableSkeleton({ rows = 6 }: { rows?: number }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/5 bg-ink-800/50 shadow-card">
+    <div className="surface overflow-hidden">
       <div className="border-b border-white/5 bg-white/[0.02] px-5 py-3">
         <div className="shimmer h-4 w-40 rounded" />
         <div className="shimmer mt-1.5 h-3 w-56 rounded" />

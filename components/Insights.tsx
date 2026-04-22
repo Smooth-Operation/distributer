@@ -35,8 +35,8 @@ export function Insights({ data }: { data: InsightPayload }) {
         return (
           <div
             key={s.key}
-            className={`surface relative overflow-hidden p-6 ring-1 ring-inset ${t.ring} animate-fade-up`}
-            style={{ animationDelay: `${i * 60}ms` }}
+            className={`surface-hover relative overflow-hidden p-6 ring-1 ring-inset ${t.ring} animate-fade-up`}
+            style={{ animationDelay: `${i * 80}ms` }}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">

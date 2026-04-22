@@ -116,8 +116,8 @@ export function ReplacementCampaigns({
         return (
           <article
             key={i}
-            className="surface relative flex flex-col overflow-hidden animate-fade-up"
-            style={{ animationDelay: `${i * 80}ms` }}
+            className="surface-hover relative flex flex-col overflow-hidden animate-fade-up"
+            style={{ animationDelay: `${i * 100}ms` }}
           >
             <div className="pointer-events-none absolute -top-24 -right-20 h-56 w-56 rounded-full bg-gradient-to-br from-emerald-400/20 via-cyan-400/10 to-transparent blur-3xl" />
 
