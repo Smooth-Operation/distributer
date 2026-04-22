@@ -24,6 +24,9 @@ import {
 import { ApiConsole } from "@/components/ApiConsole";
 import { PLATFORMS, configFor } from "@/lib/platforms";
 import { emitLog } from "@/lib/logBus";
+import { RoiTicker } from "@/components/RoiTicker";
+import { DemoNarrator } from "@/components/DemoNarrator";
+import { useEffect, useRef } from "react";
 
 type View = "idle" | "syncing" | "ready" | "analyzing" | "results" | "error";
 type Tab = "overview" | "platforms" | "console" | "ai";
@@ -59,6 +62,16 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [events, setEvents] = useState<ActivityEvent[]>([]);
   const [toasts, setToasts] = useState<Toast[]>([]);
+
+  const [demoActive, setDemoActive] = useState(false);
+  const [demoStep, setDemoStep] = useState(0);
+  const [demoTitle, setDemoTitle] = useState("");
+  const [demoDetail, setDemoDetail] = useState("");
+  const demoAbort = useRef(false);
+  const viewRef = useRef<View>(view);
+  useEffect(() => {
+    viewRef.current = view;
+  }, [view]);
 
   const logEvent = useCallback((e: Omit<ActivityEvent, "id" | "at">) => {
     setEvents((prev) => [
@@ -281,6 +294,63 @@ export default function Page() {
     });
   };
 
+  async function runDemo() {
+    demoAbort.current = false;
+    setDemoActive(true);
+
+    const narrate = async (step: number, title: string, detail: string, ms = 3000) => {
+      if (demoAbort.current) return;
+      setDemoStep(step);
+      setDemoTitle(title);
+      setDemoDetail(detail);
+      await new Promise((r) => setTimeout(r, ms));
+    };
+
+    const waitForView = async (target: View, timeout = 25000) => {
+      const start = Date.now();
+      while (Date.now() - start < timeout) {
+        if (demoAbort.current) return false;
+        // read latest via DOM-synced state by polling a ref-less proxy
+        await new Promise((r) => setTimeout(r, 150));
+        if (viewRef.current === target) return true;
+      }
+      return false;
+    };
+
+    await narrate(1, "Problem", "Marketers burn budget across 5 platforms without knowing where.", 3200);
+    if (demoAbort.current) return endDemo();
+
+    await narrate(2, "Connecting platforms", "Live OAuth refresh on Meta, TikTok, Google — watch the API console.", 1500);
+    syncPlatforms();
+    await waitForView("ready");
+    if (demoAbort.current) return endDemo();
+
+    await narrate(3, "6 ads synced", "Budget + CTR + CPC normalized across platforms in seconds.", 3200);
+    if (demoAbort.current) return endDemo();
+
+    await narrate(4, "AI diagnosis", "Gemini scores every ad and tells you what to scale, fix, kill.", 1500);
+    analyze();
+    await waitForView("results");
+    if (demoAbort.current) return endDemo();
+
+    await narrate(5, "The verdict", "Kill Generic Product Shot. Scale Before/After Fitness.", 3500);
+    if (demoAbort.current) return endDemo();
+
+    await narrate(6, "Rebuilding weak ads", "Gemini writes new copy + generates creatives in parallel.", 1500);
+    fixAndReplace();
+    await new Promise((r) => setTimeout(r, 6000));
+    if (demoAbort.current) return endDemo();
+
+    await narrate(7, "Ready to launch", "One click pushes the rebuilt campaign straight to the ad platform.", 3500);
+    endDemo();
+  }
+
+  function endDemo() {
+    demoAbort.current = true;
+    setDemoActive(false);
+    setDemoStep(0);
+  }
+
   return (
     <main className="relative min-h-screen">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-radial-hero" />
@@ -294,10 +364,16 @@ export default function Page() {
           syncedAt={syncedAt}
           onSync={syncPlatforms}
           onAnalyze={analyze}
+          onDemo={runDemo}
+          demoActive={demoActive}
           syncing={view === "syncing"}
           analyzing={view === "analyzing"}
           adCount={ads.length}
         />
+
+        <div className="mt-4">
+          <RoiTicker base={{ saved: 1240, adsAnalyzed: 47, roasLift: 3.2 }} />
+        </div>
 
         {!synced && view !== "syncing" && <IdleHero onSync={syncPlatforms} />}
 
@@ -355,6 +431,14 @@ export default function Page() {
 
       {synced && <Copilot ads={ads} />}
       <Toasts toasts={toasts} onDismiss={dismissToast} />
+      <DemoNarrator
+        active={demoActive}
+        step={demoStep}
+        total={7}
+        title={demoTitle}
+        detail={demoDetail}
+        onSkip={endDemo}
+      />
     </main>
   );
 }
@@ -366,6 +450,8 @@ function TopBar({
   syncedAt,
   onSync,
   onAnalyze,
+  onDemo,
+  demoActive,
   syncing,
   analyzing,
   adCount,
@@ -376,6 +462,8 @@ function TopBar({
   syncedAt: string | null;
   onSync: () => void;
   onAnalyze: () => void;
+  onDemo: () => void;
+  demoActive: boolean;
   syncing: boolean;
   analyzing: boolean;
   adCount: number;
@@ -421,6 +509,14 @@ function TopBar({
       </div>
 
       <div className="order-2 flex items-center gap-2 md:order-3">
+        <button
+          onClick={onDemo}
+          disabled={demoActive}
+          className="inline-flex items-center gap-1.5 rounded-full border border-violet-400/40 bg-violet-500/10 px-3 py-2 text-xs font-semibold text-violet-200 hover:bg-violet-500/20 disabled:opacity-60"
+        >
+          <PlayIcon />
+          {demoActive ? "Demo running..." : "Start Demo"}
+        </button>
         {!synced ? (
           <button
             onClick={onSync}
@@ -668,6 +764,14 @@ function AiTab({
         </div>
       )}
     </div>
+  );
+}
+
+function PlayIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M6 4l14 8-14 8V4z" />
+    </svg>
   );
 }
 
