@@ -3,7 +3,6 @@
 import { useState } from "react";
 import type { Ad } from "@/lib/mockAds";
 import { ScoreMeter } from "./ScoreMeter";
-import { AdPreview } from "./AdPreview";
 import { emitLog } from "@/lib/logBus";
 import { configFor } from "@/lib/platforms";
 
@@ -262,48 +261,6 @@ export function RewriteFlow({ ad }: { ad: Ad }) {
             </div>
           </div>
 
-          <div>
-            <div className="mb-4 flex items-end justify-between">
-              <h3 className="text-xl font-semibold text-white">Before vs. After</h3>
-              <div className="flex gap-1 rounded-full border border-white/10 bg-white/5 p-1">
-                {result.variants.map((v, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveVariant(i)}
-                    className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                      activeVariant === i ? "bg-white text-black" : "text-zinc-300 hover:text-white"
-                    }`}
-                  >
-                    {v.tone}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid gap-5 md:grid-cols-2">
-              <AdPreview
-                variant="before"
-                data={{
-                  platform: ad.platform,
-                  headline: ad.name,
-                  primaryText: `CTR ${ad.ctr}% · CPC $${ad.cpc.toFixed(
-                    2
-                  )} · ${ad.conversions} conversions from $${ad.spend} spend.`,
-                  cta: "Learn More",
-                  tone: "Original",
-                }}
-              />
-              <AdPreview
-                data={{
-                  platform: ad.platform,
-                  headline: result.variants[activeVariant].headline,
-                  primaryText: result.variants[activeVariant].primaryText,
-                  cta: result.variants[activeVariant].cta,
-                  tone: result.variants[activeVariant].tone,
-                }}
-              />
-            </div>
-          </div>
 
           <div>
             <div className="mb-4 flex items-end justify-between">
